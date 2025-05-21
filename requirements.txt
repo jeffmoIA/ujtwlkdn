@@ -1,0 +1,17 @@
+# Base de datos ORM
+SQLAlchemy>=2.0.0
+
+# Para mejorar la interfaz de Tkinter
+ttkthemes>=3.2.0
+pillow>=10.0.0
+
+# Para crear ejecutables
+pyinstaller>=6.0.0
+
+# Para desarrollo y testing
+pytest>=7.0.0
+black>=23.0.0
+flake8>=6.0.0
+
+# Para manejo de configuraciones
+python-dotenv>=1.0.0

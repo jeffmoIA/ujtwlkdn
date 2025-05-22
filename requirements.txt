@@ -1,17 +1,50 @@
-# Base de datos ORM
-SQLAlchemy>=2.0.0
+# requirements.txt
+# Dependencias necesarias para la aplicación de gestión de red
 
-# Para mejorar la interfaz de Tkinter
-ttkthemes>=3.2.0
-pillow>=10.0.0
+# === Base de datos y ORM ===
+SQLAlchemy>=2.0.0                    # ORM principal para manejo de base de datos
+alembic>=1.13.0                      # Para migraciones de base de datos
 
-# Para crear ejecutables
-pyinstaller>=6.0.0
+# === Seguridad ===
+passlib[bcrypt]>=1.7.4               # Para hash de contraseñas con bcrypt
+bcrypt>=4.0.0                        # Algoritmo de encriptación para contraseñas
 
-# Para desarrollo y testing
-pytest>=7.0.0
-black>=23.0.0
-flake8>=6.0.0
+# === Interfaz gráfica ===
+# Tkinter viene incluido con Python, pero estas librerías lo mejoran
+ttkthemes>=3.2.0                     # Temas adicionales para tkinter
+pillow>=10.0.0                       # Para manejo de imágenes (PIL)
 
-# Para manejo de configuraciones
-python-dotenv>=1.0.0
+# === Exportación de documentos ===
+python-docx>=1.1.0                   # Para crear documentos Word (.docx)
+openpyxl>=3.1.0                      # Para trabajar con Excel (opcional)
+
+# === Utilidades ===
+pyperclip>=1.8.2                     # Para copiar/pegar en el portapapeles
+python-dotenv>=1.0.0                 # Para manejo de variables de entorno
+typing-extensions>=4.8.0             # Extensiones de tipado para Python
+
+# === Desarrollo y testing ===
+pytest>=7.0.0                        # Framework de testing
+pytest-cov>=4.0.0                    # Para cobertura de código en tests
+black>=23.0.0                        # Formateador de código
+flake8>=6.0.0                        # Linter para verificar estilo de código
+mypy>=1.5.0                          # Verificador de tipos estáticos
+
+# === Empaquetado ===
+pyinstaller>=6.0.0                   # Para crear ejecutables independientes
+auto-py-to-exe>=2.40.0               # GUI para PyInstaller (opcional)
+
+# === Conexión de red (para funciones de ping) ===
+ping3>=4.0.4                         # Librería de ping para Python
+
+# === Logging y monitoreo ===
+loguru>=0.7.0                        # Logging avanzado (opcional pero recomendado)
+
+# === Fechas y tiempo ===
+python-dateutil>=2.8.2               # Utilidades para manejo de fechas
+
+# NOTAS DE INSTALACIÓN:
+# 1. Instalar con: pip install -r requirements.txt
+# 2. Para desarrollo: pip install -r requirements.txt
+# 3. Para producción, puede omitir las dependencias de desarrollo
+# 4. Si hay problemas con bcrypt en Windows, instalar Visual C++ Build Tools

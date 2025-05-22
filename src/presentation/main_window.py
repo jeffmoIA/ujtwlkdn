@@ -12,6 +12,7 @@ from presentation.views.nodos_ipran_view import NodosIPRANView
 from presentation.views.nodos_gpon_view import NodosGPONView
 from presentation.views.correo_cliente_view import CorreoClienteView
 from application.services.auth_service import AuthService
+from presentation.views.documento_view import DocumentoView
 
 class MainWindow:
     """Clase que representa la ventana principal de la aplicación."""
@@ -126,21 +127,23 @@ class MainWindow:
         self.show_login()
     
     def show_main_view(self):
-        """Muestra la vista principal de la aplicación."""
-        # Limpiar el frame de contenido
-        for widget in self.content_frame.winfo_children():
-            widget.destroy()
-        
-        # Crear pestañas (notebook)
-        self.notebook = ttk.Notebook(self.content_frame)
-        self.notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
-        
-        # Crear las diferentes vistas
-        self.ipran_view = NodosIPRANView(self.notebook)
-        self.gpon_view = NodosGPONView(self.notebook)
-        self.correo_view = CorreoClienteView(self.notebook)
-        
-        # Añadir las pestañas
-        self.notebook.add(self.ipran_view, text="Nodos IPRAN")
-        self.notebook.add(self.gpon_view, text="Nodos GPON")
-        self.notebook.add(self.correo_view, text="Plantillas de Correo")
+    """Muestra la vista principal de la aplicación."""
+    # Limpiar el frame de contenido
+    for widget in self.content_frame.winfo_children():
+        widget.destroy()
+    
+    # Crear pestañas (notebook)
+    self.notebook = ttk.Notebook(self.content_frame)
+    self.notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+    
+    # Crear las diferentes vistas
+    self.ipran_view = NodosIPRANView(self.notebook)
+    self.gpon_view = NodosGPONView(self.notebook)
+    self.correo_view = CorreoClienteView(self.notebook)
+    self.documento_view = DocumentoView(self.notebook)  # Mover aquí para mantener orden
+    
+    # Añadir las pestañas en orden lógico
+    self.notebook.add(self.ipran_view, text="Nodos IPRAN")
+    self.notebook.add(self.gpon_view, text="Nodos GPON")
+    self.notebook.add(self.correo_view, text="Plantillas de Correo")
+    self.notebook.add(self.documento_view, text="Documentos")

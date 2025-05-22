@@ -8,6 +8,7 @@ from domain.models.nodo_ipran import NodoIPRAN
 from domain.models.nodo_gpon import NodoGPON
 from domain.models.usuario import Usuario
 from domain.models.correo_cliente import CorreoCliente
+from domain.models.documento import Documento
 
 # Exportamos todos los modelos para facilitar su importación desde otros módulos
-__all__ = ['BaseModel', 'NodoIPRAN', 'NodoGPON', 'Usuario', 'CorreoCliente']
+__all__ = ['BaseModel', 'NodoIPRAN', 'NodoGPON', 'Usuario', 'CorreoCliente', 'Documento']

@@ -251,21 +251,21 @@ def verificar_configuracion():
     print("\n🔍 Verificando configuración de la base de datos...")
     
     try:
-        from infrastructure.database.config import engine, SessionLocal
+        from infrastructure.database.config import SessionLocal, engine
+        from sqlalchemy import text, inspect  # ← IMPORTAR text
         
-        # Probar conexión
+        # Probar conexión (ARREGLADO)
         with SessionLocal() as session:
-            result = session.execute("SELECT 1")
+            result = session.execute(text("SELECT 1")).fetchone()  # ← USAR text()
             print("  ✅ Conexión a la base de datos: OK")
         
         # Verificar tablas creadas
-        from sqlalchemy import inspect
         inspector = inspect(engine)
         tablas = inspector.get_table_names()
         
         tablas_esperadas = [
             'usuarios', 'nodos_ipran', 'nodos_gpon', 
-            'correo_cliente', 'documentos'
+            'correo_cliente', 'documentos', 'mikrotiks'  # ← AGREGAR mikrotiks
         ]
         
         print("  📋 Verificando tablas:")

@@ -301,7 +301,17 @@ class ApplicationController:
                 print(f"⚠️ Error en Nodos GPON: {str(e)}")
                 self.create_placeholder_tab("🌐 Nodos GPON", "Gestión de Nodos GPON")
             
-            # Pestaña 3: Plantillas de Correo
+            # Pestaña 3: MikroTik (NUEVA)
+            print("🔧 Creando pestaña de MikroTik...")
+            try:
+                from presentation.views.mikrotik_view import MikroTikView
+                mikrotik_view = MikroTikView(self.notebook)
+                self.notebook.add(mikrotik_view, text="🔧 MikroTik")
+            except Exception as e:
+                print(f"⚠️ Error en MikroTik: {str(e)}")
+                self.create_placeholder_tab("🔧 MikroTik", "Gestión de Equipos MikroTik")
+            
+            # Pestaña 4: Plantillas de Correo
             print("📧 Creando pestaña de Plantillas de Correo...")
             try:
                 from presentation.views.correo_cliente_view import CorreoClienteView
@@ -311,7 +321,7 @@ class ApplicationController:
                 print(f"⚠️ Error en Plantillas Correo: {str(e)}")
                 self.create_placeholder_tab("📧 Plantillas Correo", "Gestión de Plantillas de Correo")
             
-            # Pestaña 4: Documentos
+            # Pestaña 5: Documentos
             print("📄 Creando pestaña de Documentos...")
             try:
                 from presentation.views.documento_view import DocumentoView

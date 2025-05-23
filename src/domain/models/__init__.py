@@ -9,6 +9,15 @@ from domain.models.nodo_gpon import NodoGPON
 from domain.models.usuario import Usuario
 from domain.models.correo_cliente import CorreoCliente
 from domain.models.documento import Documento
+from domain.models.mikrotik import MikroTik  # ← NUEVO: Agregamos MikroTik
 
 # Exportamos todos los modelos para facilitar su importación desde otros módulos
-__all__ = ['BaseModel', 'NodoIPRAN', 'NodoGPON', 'Usuario', 'CorreoCliente', 'Documento']
+__all__ = [
+    'BaseModel', 
+    'NodoIPRAN', 
+    'NodoGPON', 
+    'Usuario', 
+    'CorreoCliente', 
+    'Documento',
+    'MikroTik'  # ← NUEVO: Agregamos MikroTik a la lista de exportación
+]

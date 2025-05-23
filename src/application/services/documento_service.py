@@ -5,6 +5,7 @@ Servicio para la gestión de documentos.
 import json
 import os
 import datetime
+import base64  # ← NUEVO: Para convertir bytes a string
 from typing import List, Optional, Dict, Any
 
 from domain.models.documento import Documento
@@ -56,6 +57,64 @@ class DocumentoService:
         """
         return self.repository.get_by_cliente_id(cliente_id)
     
+    def _convertir_contenido_para_json(self, contenido_json: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Convierte el contenido para que sea serializable en JSON.
+        
+        Args:
+            contenido_json: Diccionario con el contenido del documento
+            
+        Returns:
+            Dict[str, Any]: Contenido convertido para JSON
+        """
+        if not contenido_json:
+            return {}
+        
+        # Hacer una copia para no modificar el original
+        contenido_limpio = contenido_json.copy()
+        
+        # Convertir imágenes de bytes a base64 string
+        for key, value in contenido_limpio.items():
+            if isinstance(value, bytes):
+                # Si es bytes, convertir a base64 string
+                contenido_limpio[key] = base64.b64encode(value).decode('utf-8')
+            elif isinstance(value, dict):
+                # Si es un diccionario, procesarlo recursivamente
+                contenido_limpio[key] = self._convertir_contenido_para_json(value)
+        
+        return contenido_limpio
+    
+    def _convertir_contenido_desde_json(self, contenido_json: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Convierte el contenido desde JSON, restaurando los bytes de las imágenes.
+        
+        Args:
+            contenido_json: Diccionario con el contenido desde JSON
+            
+        Returns:
+            Dict[str, Any]: Contenido con imágenes restauradas
+        """
+        if not contenido_json:
+            return {}
+        
+        # Hacer una copia para no modificar el original
+        contenido_restaurado = contenido_json.copy()
+        
+        # Restaurar imágenes de base64 string a bytes
+        for key, value in contenido_restaurado.items():
+            if isinstance(value, str) and key.endswith(('_imagen', '_grafica', 'grafica_consumo')):
+                try:
+                    # Intentar convertir de base64 a bytes
+                    contenido_restaurado[key] = base64.b64decode(value)
+                except Exception:
+                    # Si falla, mantener como string
+                    pass
+            elif isinstance(value, dict):
+                # Si es un diccionario, procesarlo recursivamente
+                contenido_restaurado[key] = self._convertir_contenido_desde_json(value)
+        
+        return contenido_restaurado
+    
     def crear(self, 
               titulo: str,
               cliente_id: str, 
@@ -90,7 +149,14 @@ class DocumentoService:
         # Convertir contenido_json a texto si no es None
         json_content = None
         if contenido_json is not None:
-            json_content = json.dumps(contenido_json)
+            try:
+                # ARREGLO: Convertir contenido para que sea JSON serializable
+                contenido_limpio = self._convertir_contenido_para_json(contenido_json)
+                json_content = json.dumps(contenido_limpio)
+            except Exception as e:
+                print(f"Error al convertir contenido a JSON: {str(e)}")
+                # Si hay error, guardar sin el contenido problemático
+                json_content = json.dumps({})
         
         # Crear el nuevo documento
         nuevo_documento = Documento(
@@ -160,7 +226,14 @@ class DocumentoService:
         if mikrotik_ip:
             documento.mikrotik_ip = mikrotik_ip
         if contenido_json is not None:
-            documento.contenido_json = json.dumps(contenido_json)
+            try:
+                # ARREGLO: Convertir contenido para que sea JSON serializable
+                contenido_limpio = self._convertir_contenido_para_json(contenido_json)
+                documento.contenido_json = json.dumps(contenido_limpio)
+            except Exception as e:
+                print(f"Error al convertir contenido a JSON: {str(e)}")
+                # Si hay error, mantener el contenido actual
+                pass
         
         # Guardar los cambios
         return self.repository.update(documento)

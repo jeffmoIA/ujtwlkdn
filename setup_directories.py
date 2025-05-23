@@ -366,9 +366,8 @@ def main():
         print("✅ ¡Configuración completada exitosamente!")
         print("\n📋 Próximos pasos:")
         print("  1. Instalar dependencias: pip install -r requirements.txt")
-        print("  2. Configurar base de datos: python -c 'from src.infrastructure.database.init_db import init_db; init_db()'")
-        print("  3. Ejecutar migraciones: alembic upgrade head")
-        print("  4. Ejecutar la aplicación: python src/main.py")
+        print("  2. Configurar base de datos: python setup_database.py")
+        print("  3. Ejecutar la aplicación: python src/main.py")
         print("\n🎉 ¡Tu aplicación está lista para usar!")
         
     except KeyboardInterrupt:

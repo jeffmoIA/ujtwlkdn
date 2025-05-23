@@ -27,3 +27,46 @@ dist/
 *.spec
 
 cat .gitignore
+# === Archivos específicos de la aplicación ===
+# Base de datos local
+network_app.db
+*.db
+*.sqlite
+*.sqlite3
+
+# Documentos generados
+recursos/documentos/*.docx
+recursos/documentos/*.pdf
+recursos/documentos/imagenes/*
+recursos/exports/*
+
+# Archivos temporales
+recursos/temp/*
+!recursos/temp/.gitkeep
+
+# Logs de la aplicación
+recursos/logs/*.log
+recursos/logs/*.txt
+!recursos/logs/.gitkeep
+
+# Backups
+recursos/backup/*
+!recursos/backup/.gitkeep
+
+# Configuraciones locales
+config/local_config.py
+config/secrets.py
+
+# Archivos de imágenes temporales
+*.tmp.png
+*.tmp.jpg
+*.tmp.jpeg
+
+# Archivos de configuración de PyInstaller
+*.spec
+build/
+dist/
+
+# Archivos de entorno local
+.env.local
+.env.development
